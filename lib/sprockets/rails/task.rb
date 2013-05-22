@@ -5,7 +5,7 @@ require 'sprockets'
 module Sprockets
   module Rails
     class Task < Rake::SprocketsTask
-      attr_accessor :cache_path
+      attr_accessor :cache_path, :initialize_on_precompile
 
       def define
         namespace :assets do
@@ -13,7 +13,7 @@ module Sprockets
           desc "Load asset compile environment"
           task :environment do
             # Load full Rails environment by default
-            Rake::Task['environment'].invoke
+            Rake::Task['environment'].invoke if initialize_on_precompile
           end
 
           desc "Compile all the assets named in config.assets.precompile"
